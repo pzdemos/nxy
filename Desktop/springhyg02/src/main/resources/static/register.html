@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>注册页面</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	</head>
+	
+	
+	<body>
+	 
+	    <div class="container">
+			<img src="images/rl_top.35edfde.png"/>
+		<form action="/DoRegister" method="post">
+			<div class="form-group">
+				<label>用户名</label>
+				<input id="username" onblur="CheckUsername()"  name="username" class="form-control">
+				<small id="untxt"></small>
+			</div>
+			<div class="form-group">
+				<label>密码</label>
+				<input id="password" onblur="CheckRePwd()" name="password" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>再次输入密码</label>
+				<input id="repassword" onblur="CheckRePwd()" name="repassword" class="form-control">
+				<small id="repwdTxt" style="color:red"></small>
+			</div>
+			
+			<div class="form-group">
+				<label>邮箱</label>
+				<input id="email" onblur="CheckEmail()"  name="email" class="form-control">
+				<small id="emtxt"></small>
+			</div>
+			<div class="form-group">
+				<label>手机号</label>
+				<input id="phone" onblur="CheckPhone()" name="phone" class="form-control">
+				<small id="phtxt"></small>
+			</div>
+			
+			<button type="submit" class="btn btn-info">注册</button>
+			
+			</form>	
+	      
+		</div>
+	</body>
+	<script src="js/index.js"></script>
+	<script type="text/javascript">
+	function CheckRePwd(){
+		var pwd = $("#password").val();
+		var repwd = $("#repassword").val();
+		if(pwd != repwd){
+			$("#repwdTxt").html("两次输入不一致");
+			
+		}else{
+			$("#repwdTxt").html("");
+			
+		}
+	}
+	function CheckUsername(){
+		var txt =$("#username").val();
+		//$.post(url,data,result);url-访问后台的地址 data 是访问后台需要的数据
+		$.post("/CheckUsername",{"username":txt},function(result){
+			if(result==true){
+				$("#untxt").html("用户名可注册");
+			}else{
+				$("#untxt").html("用户名不可注册，已被注册");
+			}
+		});
+	}
+	function CheckEmail(){
+		var em =$("#email").val();
+		//$.post(url,data,result);url-访问后台的地址 data 是访问后台需要的数据
+		$.post("/CheckEmail",{"email":em},function(result){
+			if(result==true){
+				$("#emtxt").html("邮箱可注册");
+			}else{
+				$("#emtxt").html("邮箱不可注册，已被注册");
+			}
+		});
+	}
+	function CheckPhone(){
+		var ph =$("#phone").val();
+		//$.post(url,data,result);url-访问后台的地址 data 是访问后台需要的数据
+		$.post("/CheckPhone",{"phone":ph},function(result){
+			if(result==true){
+				$("#phtxt").html("手机号可注册");
+			}else{
+				$("#phtxt").html("手机号不可注册，已被注册");
+			}
+		});
+	}
+	
+	
+	</script>
+</html>
